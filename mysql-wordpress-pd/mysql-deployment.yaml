@@ -7,10 +7,13 @@ metadata:
 spec:
   ports:
     - port: 3306
+      targetPort: 3306 # remove if using clusterip
+      nodePort: 31100  # remove if using clusterip
   selector:
     app: wordpress
     tier: mysql
-  clusterIP: None
+  #clusterIP: None # uncomment if uding clusterip
+  type: NodePort # remove if uding clusterip
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -36,8 +39,8 @@ spec:
     matchLabels:
       app: wordpress
       tier: mysql
-  strategy:
-    type: Recreate
+  #strategy:
+  #type: Recreate
   template:
     metadata:
       labels:
